@@ -115,6 +115,16 @@ class Postgrator extends EventEmitter {
   }
 
   /**
+   * Creates the migration log table.
+   *
+   * @returns {Promise}
+   */
+  createMigrationTable() {
+    const { commonClient} = this;
+    return commonClient.ensureTable();
+  }
+
+  /**
    * Gets the database version of the schema from the database.
    * Otherwise 0 if no version has been run
    *
