@@ -128,6 +128,9 @@ class Postgrator extends EventEmitter {
    * Gets the database version of the schema from the database.
    * Otherwise 0 if no version has been run
    *
+   * Throws an exception if the migration log table has not been created.
+   * (i.e. if migrations have never been run against the target database)
+   *
    * @returns {Promise} database schema version
    */
   getDatabaseVersion() {
