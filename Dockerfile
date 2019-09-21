@@ -4,4 +4,4 @@ WORKDIR /app
 COPY package.json package-lock.json /app/
 RUN set -ex ; npm ci
 COPY . /app/
-CMD bash -c 'sleep 15 ; exec npm test'
+CMD bash -c 'sleep 30 ; exec npm test'
