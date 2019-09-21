@@ -32,6 +32,7 @@ services:
       - postgres
       - mariadb
       - sqlserver
+    network_mode: "service:dummy"
 
   dummy:
     image: bash
