@@ -34,6 +34,13 @@ services:
       - sqlserver
     network_mode: "service:dummy"
 
+  # the dummy image is so that we can:
+  #  a) use depends_on to make postgrator wait for everything
+  #  b) use `network_mode: "service:dummy"` on the databases and tests
+  # This allows the tests and databases to share a common, but virtual localhost.
+  # This means that the tests do not require modification to support parameterised database servers.
+  # This means that the containers do not need to be mounted onto the actual developer/CI 'localhost'
+  # It doesn't -do- anything, it just provides a network stack. So we run some trivial, interruptible process which will exit(0)
   dummy:
     image: bash
     command: bash -c "yes >/dev/null"
