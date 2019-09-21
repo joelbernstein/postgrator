@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgrator
+      POSTGRES_DB: postgrator
+    network_mode: "service:dummy"
+  mariadb:
+    image: mariadb:10.3
+    environment:
+      MYSQL_ROOT_PASSWORD: postgrator
+      MYSQL_DATABASE: postgrator
+      MYSQL_USER: postgrator
+      MYSQL_PASSWORD: postgrator
+    network_mode: "service:dummy"
+  # NB: SQL Server needs 2.00 GB of RAM!
+  sqlserver:
+    image: microsoft/mssql-server-linux:latest
+    environment:
+      ACCEPT_EULA: Y 
+      SA_PASSWORD: Postgrator123!
+      MSSQL_PID: Express
+    network_mode: "service:dummy"
+  postgrator:
+    build:
+      context: .
+    environment:
+      NODE_ENV: testing
+    depends_on:
+      - postgres
+      - mariadb
+      - sqlserver
+
+  dummy:
+    image: bash
+    command: bash -c "yes >/dev/null"
+
